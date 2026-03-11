@@ -1,65 +1,81 @@
-# MedNER-TR
+# MedNER-TR — Turkish Medical NER
 
-Turkish Medical Named Entity Recognition System
-
-## Performance
-
-- F1 Score: 99.49%
-- Precision: 99.49%
-- Recall: 99.49%
-- Accuracy: 99.76%
+Turkish **Medical Named Entity Recognition** model and demo.
+Use it to extract medical entities (drug, disease, symptom, test, organ) from Turkish clinical-style text.
 
 ## Links
 
-- Demo: https://huggingface.co/spaces/tugrulkaya/medner-tr-demo
+- Demo (Space): https://huggingface.co/spaces/tugrulkaya/medner-tr-demo
 - Model: https://huggingface.co/tugrulkaya/medner-tr
-
-## Quick Start
-```python
-from transformers import pipeline
-
-ner = pipeline("token-classification", 
-               model="tugrulkaya/medner-tr",
-               aggregation_strategy="simple")
-
-text = "Hastaya Parol 500mg baslandi."
-results = ner(text)
-```
 
 ## Supported Entities
 
-- ILAC (Medications)
-- HASTALIK (Diseases)
-- SEMPTOM (Symptoms)
-- ORGAN (Organs)
-- TEST (Medical Tests)
+- **ILAC** — Medications
+- **HASTALIK** — Diseases
+- **SEMPTOM** — Symptoms
+- **ORGAN** — Organs
+- **TEST** — Medical tests
 
-## Installation
+## Quick Start
+
 ```bash
 pip install transformers torch
 ```
 
-## Examples
-
-### Example 1
 ```python
+from transformers import pipeline
+
+ner = pipeline(
+    "token-classification",
+    model="tugrulkaya/medner-tr",
+    aggregation_strategy="simple",
+)
+
 text = "Hastaya Parol 500mg baslandi."
 results = ner(text)
-# Output: ILAC: Parol
+print(results)
 ```
 
-### Example 2
-```python
-text = "Hasta ates, oksuruk ile basvurdu."
-results = ner(text)
-# Output: SEMPTOM: ates, SEMPTOM: oksuruk
-```
+### Example Outputs (Illustrative)
+
+- `Parol` → `ILAC`
+- `ates`, `oksuruk` → `SEMPTOM`
+
+## Performance
+
+> Reported metrics:
+
+- F1: **99.49%**
+- Precision: **99.49%**
+- Recall: **99.49%**
+- Accuracy: **99.76%**
+
+## Notes / Limitations
+
+- Model performance may vary depending on:
+  - spelling mistakes / informal writing
+  - domain shift (different hospitals / note styles)
+  - uncommon abbreviations
+- Always validate outputs in clinical workflows.
 
 ## License
 
-MIT License - Free for commercial and research use
+MIT
+
+## Citation
+
+If you use this project in academic work, please cite:
+
+```bibtex
+@misc{mednertr,
+  title   = {MedNER-TR: Turkish Medical Named Entity Recognition},
+  author  = {Tuğrul Kaya},
+  year    = {2026},
+  url     = {https://github.com/mtkaya/medner-tr}
+}
+```
 
 ## Contact
 
-- GitHub: https://github.com/tugrulkaya/medner-tr
-- Hugging Face: https://huggingface.co/tugrulkaya/medner-tr
+- GitHub: https://github.com/mtkaya
+- Hugging Face: https://huggingface.co/tugrulkaya
